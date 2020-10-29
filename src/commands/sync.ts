@@ -1,8 +1,9 @@
 import {Command} from '@oclif/command'
-import {spawn} from 'child_process'
 import cli from 'cli-ux'
 import * as chalk from 'chalk'
+
 import config from '../utils/config'
+import {run} from './command-runner'
 
 export default class Sync extends Command {
   static description = 'sync your notes to git'
@@ -16,13 +17,8 @@ export default class Sync extends Command {
       git push
 `
 
-    cli.action.start(chalk.cyan('Syncing notes'))
-
-    await new Promise(resolve => {
-      const cmd = spawn('sh', ['-c', syncCmd])
-      cmd.stdout.on('data', data => this.log(data.toString()))
-      cmd.stderr.on('data', data => this.log(data.toString()))
-      cmd.on('close', resolve)
-    })
+    this.log(`${chalk.magentaBright('Vault:')} ${config.notesDir()}`)
+    cli.action.start(chalk.blueBright('Syncing notes'))
+    await run(this, syncCmd)
   }
 }
