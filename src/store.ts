@@ -4,11 +4,8 @@ import * as path from 'path'
 let configFile: string
 
 let state = {
-  currentVault: 'life',
-  vaults: {
-    life: '~/dev/notes',
-    work: '~/dev/notes',
-  },
+  currentVault: '',
+  vaults: {},
 }
 
 export default {
@@ -20,10 +17,14 @@ export default {
   },
 
   async save() {
+    await fs.ensureFile(configFile)
     await fs.writeJSON(configFile, state)
   },
 
   getCurrentVault: (): string => state.currentVault,
+  setCurrentVault: (vault: string) => {
+    state.currentVault = vault
+  },
 
   getVaults: (): {[vault: string]: string} => state.vaults,
 }
