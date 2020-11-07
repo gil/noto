@@ -2,7 +2,7 @@ import * as chalk from 'chalk'
 
 import Command from '../../base'
 
-export default class Sync extends Command {
+export default class VaultIndex extends Command {
   static description = 'list all your vaults'
 
   async run() {

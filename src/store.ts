@@ -23,7 +23,7 @@ export default {
     await fs.writeJSON(configFile, state)
   },
 
-  getCurrentVault: () => state.currentVault,
+  getCurrentVault: (): string => state.currentVault,
 
-  getVaults: () => state.vaults,
+  getVaults: (): {[vault: string]: string} => state.vaults,
 }
