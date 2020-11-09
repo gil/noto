@@ -21,7 +21,14 @@ export default class VaultRemove extends Command {
     }
 
     this.store.removeVault(args.name)
-    await this.store.save()
     this.log(`Removed vault ${chalk.magentaBright(args.name)}.`)
+
+    const vaultsLeftKeys = Object.keys(this.store.getVaults())
+    if (this.store.getCurrentVault() === args.name && vaultsLeftKeys.length > 0) {
+      this.store.setCurrentVault(vaultsLeftKeys[0])
+      this.log(`Current vault set to ${chalk.magentaBright(vaultsLeftKeys[0])}.`)
+    }
+
+    await this.store.save()
   }
 }
