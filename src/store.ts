@@ -3,7 +3,10 @@ import * as path from 'path'
 
 let configFile: string
 
-let state = {
+let state: {
+  currentVault: string;
+  vaults: {[vault: string]: string};
+} = {
   currentVault: '',
   vaults: {},
 }
@@ -27,4 +30,10 @@ export default {
   },
 
   getVaults: (): {[vault: string]: string} => state.vaults,
+  addVault: (name: string, path: string) => {
+    state.vaults[name] = path
+  },
+  removeVault: (name: string) => {
+    delete state.vaults[name]
+  },
 }
