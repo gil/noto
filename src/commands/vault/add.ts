@@ -21,17 +21,18 @@ export default class VaultAdd extends Command {
 
   async run() {
     const {args} = this.parse(VaultAdd)
+    const vaultName = args.name.toLowerCase()
 
-    if (this.store.getVaults()[args.name]) {
-      this.error(`There's already a vault called ${chalk.magentaBright(args.name)}`)
+    if (this.store.getVaults()[vaultName]) {
+      this.error(`There's already a vault called ${chalk.magentaBright(vaultName)}`)
     } else if (!fs.pathExistsSync(args.path)) {
       this.error(`Couldn't find the directory: ${chalk.magentaBright(args.path)}`)
     }
 
-    this.store.addVault(args.name, args.path)
-    this.log(`Added vault ${chalk.magentaBright(args.name)} from: ${args.path}`)
-    this.store.setCurrentVault(args.name)
-    this.log(`Current vault set to ${chalk.magentaBright(args.name)}.`)
+    this.store.addVault(vaultName, args.path)
+    this.log(`Added vault ${chalk.magentaBright(vaultName)} from: ${args.path}`)
+    this.store.setCurrentVault(vaultName)
+    this.log(`Current vault set to ${chalk.magentaBright(vaultName)}.`)
     await this.store.save()
   }
 }

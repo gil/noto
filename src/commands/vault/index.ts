@@ -17,12 +17,13 @@ export default class Vault extends Command {
     const {args} = this.parse(Vault)
 
     if (args.name) {
-      if (!this.store.getVaults()[args.name]) {
-        this.error(`Couldn't find vault ${chalk.magentaBright(args.name)}`)
+      const vaultName = args.name.toLowerCase()
+      if (!this.store.getVaults()[vaultName]) {
+        this.error(`Couldn't find vault ${chalk.magentaBright(vaultName)}`)
       }
-      this.store.setCurrentVault(args.name)
+      this.store.setCurrentVault(vaultName)
       await this.store.save()
-      this.log(`Current vault set to ${chalk.magentaBright(args.name)}.`)
+      this.log(`Current vault set to ${chalk.magentaBright(vaultName)}.`)
     } else {
       Object.entries(this.store.getVaults())
       .forEach(([name, dir]) => this.log(`${chalk.magentaBright(name + ':')} ${dir}`))

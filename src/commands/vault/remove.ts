@@ -15,16 +15,17 @@ export default class VaultRemove extends Command {
 
   async run() {
     const {args} = this.parse(VaultRemove)
+    const vaultName = args.name.toLowerCase()
 
-    if (!this.store.getVaults()[args.name]) {
-      this.error(`Couldn't find vault ${chalk.magentaBright(args.name)}`)
+    if (!this.store.getVaults()[vaultName]) {
+      this.error(`Couldn't find vault ${chalk.magentaBright(vaultName)}`)
     }
 
-    this.store.removeVault(args.name)
-    this.log(`Removed vault ${chalk.magentaBright(args.name)}.`)
+    this.store.removeVault(vaultName)
+    this.log(`Removed vault ${chalk.magentaBright(vaultName)}.`)
 
     const vaultsLeftKeys = Object.keys(this.store.getVaults())
-    if (this.store.getCurrentVault() === args.name && vaultsLeftKeys.length > 0) {
+    if (this.store.getCurrentVault() === vaultName && vaultsLeftKeys.length > 0) {
       this.store.setCurrentVault(vaultsLeftKeys[0])
       this.log(`Current vault set to ${chalk.magentaBright(vaultsLeftKeys[0])}.`)
     }
