@@ -10,6 +10,7 @@
   "dependencies": {
     "@oclif/command": "^1",
     "@oclif/config": "^1",
+    "@oclif/plugin-autocomplete": "^0.2.0",
     "@oclif/plugin-help": "^3",
     "@types/fs-extra": "^9.0.3",
     "chalk": "^4.1.0",
@@ -52,7 +53,8 @@
     "commands": "./lib/commands",
     "bin": "noto",
     "plugins": [
-      "@oclif/plugin-help"
+      "@oclif/plugin-help",
+      "@oclif/plugin-autocomplete"
     ]
   },
   "repository": "gil/noto",
