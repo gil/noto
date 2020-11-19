@@ -1,5 +1,5 @@
-import * as chalk from 'chalk'
-import * as fs from 'fs-extra'
+import chalk from 'chalk'
+import fs from 'fs-extra'
 
 import Command from '../../base'
 
