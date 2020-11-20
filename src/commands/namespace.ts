@@ -42,5 +42,6 @@ export default class Namespace extends Command {
     }
 
     printCounts(counts)
+    log(`${chalk.blueBright('Total')}: ${entries.length}`)
   }
 }
