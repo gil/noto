@@ -1,8 +1,8 @@
 import chalk from 'chalk'
 import fg from 'fast-glob'
+import untildify from 'untildify'
 
 import Command from '../base'
-import untildify from 'untildify'
 
 export default class Namespace extends Command {
   static description = 'list all namespaces and count notes on each'
