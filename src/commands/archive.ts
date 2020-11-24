@@ -48,8 +48,10 @@ export default class Archive extends Command {
     this.log(`${chalk.greenBright('Slug')}: ${slug}`)
 
     // Create directory
-    const dest = path.join(untildify(vaultDir), 'archive', slug)
+    const dest = path.join(untildify(vaultDir), 'archive')
+    const mediaDest = path.join(dest, slug)
     await fs.ensureDir(dest)
+    await fs.ensureDir(mediaDest)
 
     // Extract important content
     const reader = new Readability(doc.window.document)
@@ -61,14 +63,19 @@ export default class Archive extends Command {
         --from html-native_divs-native_spans \
         --to markdown-grid_tables \
         --wrap=none \
-        --extract-media . \
-        -o _content.md
+        --extract-media "${slug}" \
+        -o "${slug}.md"
 `
 
     await run(this, cmd, {cwd: dest}, content)
 
+    // Delete media folder, if empty
+    try {
+      await fs.rmdir(mediaDest)
+    } catch (error) { /* not empty */ }
+
     // Add YAML metadata
-    const markdownPath = path.join(dest, '_content.md')
+    const markdownPath = path.join(dest, `${slug}.md`)
     const markdownContent = await fs.readFile(markdownPath)
     const fullMarkdown = `
 ---
